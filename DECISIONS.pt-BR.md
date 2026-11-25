@@ -25,8 +25,14 @@ Copiem o modelo abaixo sempre que precisarem de uma entrada nova.
 - **Alternativas consideradas:** Java com Spring Boot; Python com FastAPI.
 - **Motivo:** o time já tem mais familiaridade com JavaScript, e o prazo de uma semana favorece uma stack na qual todos conseguem contribuir desde o primeiro dia.
 
-## [data] — [título da decisão]
+## [24/11/2026] — [Linguagens de programação que serão utilizadas:]
 
-- **Decisão:**
-- **Alternativas consideradas:**
-- **Motivo:**
+- **Decisão:** Usar para front-end HTML, CSS e JS e para back-end com java Spring Boot
+- **Alternativas consideradas:** Python para potencialização da IA no back-end e React para front-end
+- **Motivo:** Melhor afinidade dos membros com as linguagens selecionadas.
+
+## [24/11/2026] — [Linguagens de programação que serão utilizadas:]
+
+- **Decisão:** 
+- **Alternativas consideradas:** 
+- **Motivo:** 
