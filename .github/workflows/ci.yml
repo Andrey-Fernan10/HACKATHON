@@ -1,10 +1,10 @@
-name: CI - Build Inicial
+name: CI - Build Spring Boot
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "development" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "development" ]
 
 jobs:
   build:
@@ -19,6 +19,8 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+          cache: 'maven'
 
-      - name: Compilar arquivos Java
-        run: javac $(find . -name "*.java")
+      - name: Compilar projeto Spring Boot (Maven)
+        working-directory: ./backend
+        run: mvn -B test-compile

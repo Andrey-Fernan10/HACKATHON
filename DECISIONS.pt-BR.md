@@ -27,7 +27,7 @@ Copiem o modelo abaixo sempre que precisarem de uma entrada nova.
 
 ## [24/11/2026] — [Linguagens de programação que serão utilizadas:]
 
-- **Decisão:** Usar para front-end HTML, CSS e JS e para back-end com apenas Java
+- **Decisão:** Usar para front-end HTML, CSS e JS e para back-end com java Spring Boot
 - **Alternativas consideradas:** Python para potencialização da IA no back-end e React para front-end
 - **Motivo:** Melhor afinidade dos membros com as linguagens selecionadas.
 

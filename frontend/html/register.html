@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+</head>
+<body>
+    <h1>| Registre-se</h1>
+
+    <form id="form-registro">
+        <div>
+            <input type="text" id="name" name="name" placeholder="Nome..." required>
+        </div>
+        <div>
+            <input type="email" id="email" name="email" placeholder="Email..." required>
+        </div>
+        <div>
+            <input type="password" id="password" name="password" placeholder="Senha..." required>
+        </div>
+
+        <fieldset>
+            <legend>Escolha:</legend>
+            <div>
+                <input type="radio" id="opcao1" name="role" value="Student" checked>
+                <label for="opcao1">Estudante</label>
+            </div>
+            <div>
+                <input type="radio" id="opcao2" name="role" value="Teacher">
+                <label for="opcao2">Professor</label>
+            </div>
+        </fieldset>
+
+        <div>
+            <button type="submit">Registre-se</button>
+        </div>
+    </form>
+
+    <p>Já tem conta? <a href="login.html">Entrar</a></p>
+
+    <script src="../js/registro.js"></script>
+</body>
+</html>

@@ -21,7 +21,7 @@ Copy the template below whenever you need a new entry.
 
 ## 23/11/2026 — Back-end stack choice (example)
 
-- **Decision:** use Node.js with Express on the back-end.
+- **Decision:** use Node.js with Express on the back-end
 - **Alternatives considered:** Java with Spring Boot; Python with FastAPI.
 - **Rationale:** the team is already more familiar with JavaScript, and a one-week deadline favors a stack everyone can contribute to from day one.
 
