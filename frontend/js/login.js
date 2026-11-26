@@ -15,7 +15,7 @@ formLogin.addEventListener('submit', async (event) => {
     const password = document.getElementById('password').value;
 
     try {
-        const response = await fetch('http://localhost:8080/api/login', {
+        const response = await fetch('http://localhost:8080/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
@@ -30,15 +30,6 @@ formLogin.addEventListener('submit', async (event) => {
         localStorage.setItem('loggedUser', JSON.stringify(user));
         redirectByRole(user.role);
     } catch (error) {
-
-        const savedRole = localStorage.getItem('registeredRole_' + email);
-
-        if (!savedRole) {
-            alert('Não foi possível conectar ao servidor e nenhum registro local foi encontrado para esse email.');
-            return;
-        }
-
-        localStorage.setItem('loggedUser', JSON.stringify({ email, role: savedRole }));
-        redirectByRole(savedRole);
+        alert('Não foi possível conectar ao servidor. Tente novamente quando o back-end estiver disponível.');
     }
 });

@@ -10,25 +10,23 @@ formRegistro.addEventListener('submit', async (event) => {
         role: document.querySelector('input[name="role"]:checked').value
     };
 
-    localStorage.setItem('registeredRole_' + userData.email, userData.role);
-
     try {
-        const response = await fetch('http://localhost:8080/api/register', {
+        const response = await fetch('http://localhost:8080/api/auth/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(userData)
         });
 
         if (!response.ok) {
-            alert('Erro ao cadastrar usuário.');
+            alert(response.status === 409
+                ? 'Já existe uma conta com este email.'
+                : 'Não foi possível cadastrar. Verifique os dados e tente novamente.');
             return;
         }
 
         alert('Cadastro realizado com sucesso!');
         window.location.href = 'login.html';
     } catch (error) {
-
-        alert('Back-end indisponível no momento; indo para o login para teste local.');
-        window.location.href = 'login.html';
+        alert('Não foi possível conectar ao servidor. O cadastro não foi salvo.');
     }
 });

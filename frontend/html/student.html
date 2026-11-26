@@ -1,11 +1,237 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página do Estudante</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Mentorship — Estudante</title>
+  <style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    body { background: #cfcfcf; color: #111; min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* Topo */
+    header {
+      background: #fff;
+      padding: 12px 24px;
+      border-radius: 0 0 12px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .tag { font-size: 11px; letter-spacing: 1px; color: #666; }
+    .project-title { font-size: 16px; font-weight: 700; margin-top: 2px; }
+    .header-actions { display: flex; gap: 12px; align-items: center; }
+    .icon-btn {
+      width: 34px; height: 34px; border-radius: 50%; border: none;
+      background: #222; color: #fff; cursor: pointer; font-size: 15px;
+    }
+
+    /* Conteúdo principal */
+    main {
+      flex: 1;
+      max-width: 920px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px 24px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    /* Barra de busca */
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: 20px;
+      padding: 6px 14px;
+      width: 100%;
+      max-width: 460px;
+      margin: 0 auto;
+      border: 1px solid #bbb;
+    }
+    .search-box input {
+      flex: 1; border: none; outline: none; font-size: 14px; padding: 4px 8px; background: transparent;
+    }
+    .search-box button {
+      border: none; background: transparent; cursor: pointer; font-size: 16px; padding: 2px 6px;
+    }
+
+    /* Lista / triagem de perguntas */
+    #feed {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .card {
+      background: #fff;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid #bbb;
+      font-size: 14px;
+    }
+    .card-meta { font-size: 12px; color: #555; margin-bottom: 4px; }
+
+    /* Formulário de pergunta */
+    .ask-form { display: flex; flex-direction: column; gap: 8px; max-width: 420px; width: 100%; }
+    .ask-form label { font-size: 14px; color: #222; }
+    .ask-form textarea {
+      width: 100%;
+      min-height: 95px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #bbb;
+      resize: vertical;
+      font-size: 14px;
+      outline: none;
+    }
+    .btn-send {
+      align-self: flex-start;
+      background: #2b2b2b;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .btn-send:hover { background: #111; }
+  </style>
 </head>
 <body>
-    <h1>Area do Estudante</h1>
+  <header>
+    <div>
+      <div class="tag">HACKATHON</div>
+      <div class="project-title">Smart Mentorship</div>
+    </div>
+    <div class="header-actions">
+      <button type="button" class="icon-btn" id="btn-notif" title="Notificações">🔔</button>
+      <button type="button" class="icon-btn" id="btn-user" title="Usuário">👤</button>
+    </div>
+  </header>
+
+  <main>
+    <div>
+      <form class="search-box" id="form-search">
+        <input type="search" id="search-input" placeholder="Pesquisar perguntas" />
+        <button type="submit" aria-label="Pesquisar">🔍</button>
+      </form>
+
+      <div id="feed" style="margin-top: 16px;"></div>
+    </div>
+
+    <form class="ask-form" id="form-question">
+      <label for="question-text">Label</label>
+      <textarea id="question-text" placeholder="Digite aqui sua pergunta..." required></textarea>
+      <button type="submit" class="btn-send">Enviar</button>
+    </form>
+  </main>
+
+  <script>
+      const API_URL = 'http://localhost:8080/api/questions';
+      const feed = document.getElementById('feed');
+      const searchForm = document.getElementById('form-search');
+      const questionForm = document.getElementById('form-question');
+
+      const primaryUser = localStorage.getItem('user');
+      const userStorageKey = primaryUser ? 'user' : 'loggedUser';
+      const rawUser = primaryUser || localStorage.getItem('loggedUser');
+      const loggedUser = rawUser ? JSON.parse(rawUser) : null;
+      if (loggedUser && typeof loggedUser === 'object' && 'password' in loggedUser) {
+        delete loggedUser.password;
+        localStorage.setItem(userStorageKey, JSON.stringify(loggedUser));
+      }
+      if (loggedUser?.email) {
+        document.getElementById('btn-user').title = `${loggedUser.name ?? ''} (${loggedUser.email})`;
+      }
+
+      function renderQuestions(items) {
+        if (!Array.isArray(items) || items.length === 0) {
+          feed.innerHTML = '';
+          return;
+        }
+        feed.replaceChildren();
+        items.forEach(q => {
+          const card = document.createElement('article');
+          card.className = 'card';
+
+          const meta = document.createElement('div');
+          meta.className = 'card-meta';
+          meta.textContent = `#${q.id ?? '-'} • ${q.status ?? 'Pendente'} • ${q.author?.name || 'Anônimo'}`;
+
+          const content = document.createElement('div');
+          content.textContent = q.content ?? q.questionText ?? '';
+          card.append(meta, content);
+
+          if (q.answer) {
+            const answer = document.createElement('div');
+            answer.className = 'card-answer';
+            answer.style.marginTop = '10px';
+
+            const heading = document.createElement('strong');
+            heading.textContent = 'Resposta do professor';
+            const text = document.createElement('p');
+            text.textContent = q.answer;
+            answer.append(heading, text);
+            card.append(answer);
+          }
+
+          feed.append(card);
+        });
+      }
+
+      async function loadQuestions(query = '') {
+        try {
+          const url = query ? `${API_URL}?query=${encodeURIComponent(query)}` : API_URL;
+          const res = await fetch(url);
+          if (res.ok) {
+            renderQuestions(await res.json());
+          }
+        } catch {
+          // Mantém a tela funcional se o back-end estiver offline
+        }
+      }
+
+      searchForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const query = document.getElementById('search-input').value.trim();
+        await loadQuestions(query);
+      });
+
+      questionForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const textarea = document.getElementById('question-text');
+        const content = textarea.value.trim();
+        if (!content) return;
+
+        const payload = {
+          content,
+          authorId: loggedUser?.id ?? null,
+          authorEmail: loggedUser?.email ?? null
+        };
+
+        try {
+          const res = await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if (!res.ok) {
+            alert('Erro ao enviar pergunta.');
+            return;
+          }
+
+          textarea.value = '';
+          await loadQuestions();
+        } catch {
+          alert('Back-end indisponível no momento. Pergunta não salva no banco.');
+        }
+      });
+
+      loadQuestions();
+  </script>
 </body>
 </html>

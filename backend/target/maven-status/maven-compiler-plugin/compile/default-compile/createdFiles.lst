@@ -1,0 +1,13 @@
+controller\QuestionController$AnswerRequest.class
+controller\QuestionController.class
+repository\QuestionRepository.class
+controller\AuthController$LoginRequest.class
+controller\QuestionController$QuestionResponse.class
+repository\UserRepository.class
+model\Question.class
+controller\QuestionController$AuthorResponse.class
+controller\AuthController$AuthenticatedUser.class
+controller\AuthController$RegisterRequest.class
+Application.class
+controller\AuthController.class
+model\User.class
