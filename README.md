@@ -1,4 +1,4 @@
-# Monitoria Inteligente
+# Smart tutoring 
 
 *English* · [Português (Brasil)](README.pt-BR.md)
 
@@ -32,7 +32,32 @@ The application is primarily designed for students who require study support and
 
 ## Solution
 
-Monitoria Inteligente is an application developed to facilitate connections between students and tutors, allowing students to find available tutoring sessions based on their specific needs and subjects. The platform aims to make the academic support process more organized and accessible, simplifying how information related to tutoring sessions is accessed and managed.
+Smart tutoring (Monitoria inteligente) is an application developed to facilitate connections between students and tutors, allowing students to find available tutoring sessions based on their specific needs and subjects. The platform aims to make the academic support process more organized and accessible, simplifying how information related to tutoring sessions is accessed and managed.
+
+MVPs – Smart tutoring (Monitoria inteligente)
+1. User authentication:
+  - User login.
+  - Profile identification (Teacher or Student).
+  - Registration (name, email, and password).
+2. Question management:
+  - Students can submit questions.
+  - Storage of question text.
+  - Identification of the student who submitted the question.
+3. AI-powered intelligent filtering:
+  - Analysis of incoming questions.
+  - Identification of related questions based on correlation.
+  - Routing of questions based on the analysis results.
+4. Teacher dashboard:
+  - View of the student question inbox.
+  - Access to received questions.
+  - Ability to respond to questions.
+5. Response system:
+  - Storage of response text.
+  - Linking of the response to the corresponding question.
+  - Recording of response evaluation (good_response, initially set to false).
+6. Viewing answered questions:
+  - Display of questions that have already been answered.
+  - Presentation of the corresponding answers to students.
 
 ## Stack
 
@@ -67,7 +92,18 @@ text
 
 ### Prerequisites
 
-(language versions, package managers, databases, etc.)
+Back-End: 
+  - Java JDK 17
+  - Apache Maven
+  - Spring Boot 3.3.5
+  - SQLite
+
+Front-End: 
+  - Update web browser
+
+Development tools:
+  - Visual Studio Code
+  - Git
 
 ### Back-end
 
@@ -91,12 +127,6 @@ bash
 
 ## Links
 
-- *Repository:*
-- *Deploy (if any):*
-- *Board / GitHub project (if any):*
-
-## Links
-
 - **Repository:**
 - **Deploy (if any):**
-- **Board / GitHub project (if any):**
+- **https://github.com/Andrey-Fernan10/HACKATHON.git**
