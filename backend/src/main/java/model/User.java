@@ -6,6 +6,11 @@ import jakarta.persistence.*;
 @Table(name = "users")
 public class User {
 
+    public enum Role {
+        Student,
+        Teacher
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,24 +24,18 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String role = "STUDENT";
+    private Role role;
 
     public User() {
     }
 
-    public User(String name, String email, String password, String role) {
+    public User(String name, String email, String password, Role role) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.role = role != null ? role : "STUDENT";
-    }
-
-    @PrePersist
-    protected void onCreate() {
-        if (this.role == null || this.role.trim().isEmpty()) {
-            this.role = "STUDENT";
-        }
+        this.role = role;
     }
 
     public Long getId() {
@@ -71,11 +70,11 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 }

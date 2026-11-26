@@ -42,18 +42,19 @@ public class AuthController {
             return ResponseEntity.badRequest().body(Map.of("message", "Perfil inválido."));
         }
 
+        User.Role role = User.Role.valueOf(request.role());
         User user = userRepository.save(new User(
                 request.name().trim(),
                 email,
                 passwordEncoder.encode(request.password()),
-                request.role()
+                role
         ));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
                 "id", user.getId(),
                 "name", user.getName(),
                 "email", user.getEmail(),
-                "role", user.getRole()
+                "role", user.getRole().name()
         ));
     }
 
@@ -77,7 +78,7 @@ public class AuthController {
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
-                user.getRole()
+                user.getRole().name()
         ));
     }
 
