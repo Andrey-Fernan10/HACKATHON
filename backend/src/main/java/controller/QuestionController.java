@@ -4,10 +4,10 @@ import dto.QuestionTriageResult;
 import model.Answer;
 import model.Question;
 import model.User;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import repository.QuestionRepository;
 import repository.UserRepository;
@@ -150,6 +150,13 @@ public class QuestionController {
         question.setStatus("Respondida");
         Question saved = questionRepository.save(question);
         return ResponseEntity.ok(QuestionResponse.from(saved));
+    }
+
+    @PostMapping("/ai-filters")
+    public ResponseEntity<?> generateAiFilters() {
+        List<Question> all = questionRepository.findAllByOrderByCreatedAtDesc();
+        List<Map<String, Object>> filters = questionTriageService.generateSmartFilters(all);
+        return ResponseEntity.ok(Map.of("filters", filters));
     }
 
     public record QuestionResponse(
