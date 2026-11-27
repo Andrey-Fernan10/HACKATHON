@@ -1,1 +1,15 @@
+# Environment variable
+.env
+.env.*
+!.env.example
+
+# Secrets
+*.pem
+*.key
+
+# IDE
+.idea/
+.vscode/
+
+# Build
 target/

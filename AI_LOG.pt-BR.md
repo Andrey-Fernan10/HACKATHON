@@ -14,7 +14,7 @@ Copiem o modelo abaixo sempre que precisarem de uma entrada nova.
 
 ## Ferramentas
 
-- (ex.: ChatGPT, GitHub Copilot, Cursor, outro)
+- ChatGPT
 
 ## Modelo de registro
 
