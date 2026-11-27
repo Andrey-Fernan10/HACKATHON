@@ -10,6 +10,10 @@ import repository.UserRepository;
 import java.util.Map;
 import java.util.Optional;
 
+// Normalização para o email, para que ele seja tratado de forma case insensitive
+// case insensitive: tratado de forma igual, independente de letras maiúsculas ou minúsculas
+import java.util.Locale;
+
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "*")
@@ -17,6 +21,10 @@ public class AuthController {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
+    private String emailPadrao(String email) {
+        return email.trim().toLowerCase(Locale.ROOT);
+    }
 
     public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -32,8 +40,8 @@ public class AuthController {
             return ResponseEntity.badRequest().body(Map.of("message", "Nome, email, senha e perfil são obrigatórios."));
         }
 
-        String email = request.email().trim();
-        if (userRepository.findByEmail(email).isPresent()) {
+        String email = emailPadrao(request.email());
+        if (userRepository.findByEmailIgnoreCase(email).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(Map.of("message", "Já existe uma conta com este email."));
         }
@@ -64,7 +72,7 @@ public class AuthController {
             return ResponseEntity.badRequest().body(Map.of("message", "Email e senha são obrigatórios."));
         }
 
-        Optional<User> userOpt = userRepository.findByEmail(request.email().trim());
+        Optional<User> userOpt = userRepository.findByEmailIgnoreCase(emailPadrao(request.email()));
         if (userOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "Usuário não encontrado."));
         }
@@ -86,3 +94,9 @@ public class AuthController {
     public record LoginRequest(String email, String password) {}
     public record AuthenticatedUser(Long id, String name, String email, String role) {}
 }
+
+/* Nota: emailPadrao serve para:
+      tratarem letras maiúsculas e minúsculas de forma igual, 
+      os espaços serão removidos
+      o email será convertido para letras minúsculas
+*/
