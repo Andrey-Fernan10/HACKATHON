@@ -1,0 +1,153 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background-color: #d6d6d6;
+  color: #161616;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Cartão central unificado */
+body > h1,
+body > form,
+body > #login-message,
+body > button[onclick*="register.html"] {
+  width: 100%;
+  max-width: 560px;
+  background-color: #fdf3f2;
+  border-left: 1px solid #f2e4e2;
+  border-right: 1px solid #f2e4e2;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+}
+
+body > h1 {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  padding: 40px 44px 10px;
+  border-top: 1px solid #f2e4e2;
+  border-radius: 28px 28px 0 0;
+}
+
+body > h1::before {
+  content: "Smart Mentorship";
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #555555;
+  margin-bottom: 6px;
+  letter-spacing: 0;
+}
+
+#form-login {
+  padding: 8px 44px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+#form-login > br {
+  display: none;
+}
+
+#form-login input[type="email"],
+#form-login input[type="password"] {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 1rem;
+  color: #161616;
+  background-color: #ffffff;
+  border: 1px solid #d8d8d8;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+#form-login input::placeholder {
+  color: #6f6f6f;
+}
+
+#form-login input:focus {
+  border-color: #525252;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
+#form-login button[type="submit"] {
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #161616;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+#form-login button[type="submit"]:hover {
+  background-color: #2f2f2f;
+}
+
+#form-login button[type="submit"]:active {
+  transform: scale(0.99);
+}
+
+/* Mensagem de retorno do login */
+#login-message {
+  min-height: 24px;
+  padding: 4px 44px 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #4a4a4a;
+}
+
+#login-message:empty {
+  display: none;
+}
+
+body > br {
+  display: none;
+}
+
+/* Botão secundário para cadastro */
+body > button[onclick*="register.html"] {
+  padding: 14px 44px 36px;
+  border-top: none;
+  border-bottom: 1px solid #f2e4e2;
+  border-radius: 0 0 28px 28px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.14);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #161616;
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+body > button[onclick*="register.html"]:hover {
+  color: #444444;
+}
+
+@media (max-width: 600px) {
+  body > h1,
+  #form-login,
+  #login-message,
+  body > button[onclick*="register.html"] {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
