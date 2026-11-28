@@ -14,7 +14,8 @@ Copiem o modelo abaixo sempre que precisarem de uma entrada nova.
 
 ## Ferramentas
 
-- ChatGPT
+- Gemini
+- Claude
 
 ## Modelo de registro
 
@@ -81,7 +82,7 @@ Copiem o modelo abaixo sempre que precisarem de uma entrada nova.
 
 - **Prompt principal:** "Foi mostrado o print da estrutura atual da pasta do projeto no VS Code para avaliar a organização das pastas, documentação, CI e código Java."
 - **O que a IA gerou:** uma análise da estrutura da pasta `HACKATHON` destacando os acertos (workflow de CI na raiz, documentação bilíngue e separação inicial do backend em Java) e os pontos de atenção (organização da pasta `main` junto a `model`, arquivo `ci.yml` ainda não versionado no Git e ausência das demais camadas/pastas do MVP como repositório, serviço de IA e front-end).
-- **O que o time aproveitou:** 
+- **O que o time aproveitou:**  Sua análise das estruturas de bases para uso do backend e melhor potencial do projeto como um todo.
 - **O que o time corrigiu ou rejeitou, e por quê:** As pastas de frontend que foram sugeridas foram feitas em um esquema.
 
 ### [26/11] — [Início do Front-end: Tela de Registro]
@@ -89,4 +90,88 @@ Copiem o modelo abaixo sempre que precisarem de uma entrada nova.
 - **Prompt principal:** "Mostrar o início do front-end com o HTML de registro e pedir avaliação e próximos passos para integrar com a classe `User` em Java."
 - **O que a IA gerou:** uma análise do HTML inicial apontando o redirecionamento direto no botão e o desalinhamento dos valores dos rádios com o enum `Role` do Java, acompanhada de um `registro.html` estruturado com `<form>`, um `registro.js` com `fetch` para enviar os dados em JSON e o próximo passo de expor a rota no back-end Java.
 - **O que o time aproveitou:**  O código principal mandado pela IA depois de revisar.
-- **O que o time corrigiu ou rejeitou, e por quê:**
+- **O que o time corrigiu ou rejeitou, e por quê:** Algumas sugestões foram rejeitadas pelo fato de que eram coisas muito avançadas para um projeto de tempo curto.
+
+### [26/11] — [Redirecionamento por Perfil no Login]
+
+- **Prompt principal:** "Enviar o código inicial de `login.html` e perguntar como redirecionar para `student.html` ou `teacher.html` conforme a escolha do usuário no registro."
+- **O que a IA gerou:** uma solução para redirecionar por perfil (`Student` ou `Teacher`) tanto via resposta do back-end quanto com fallback temporário no `localStorage` para testar antes do servidor subir, incluindo ajustes no `login.html`, salvamento do `role` no `registro.js` e lógica de redirecionamento no `login.js`.
+- **O que o time aproveitou:** O código feito foi totalmente aproveitado.
+- **O que o time corrigiu ou rejeitou, e por quê:** Adaptamos algumas coisas pois ainda não estavamos usando SpringBoot
+
+### [26/11] — [Instalação e Configuração do Spring Boot]
+
+- **Prompt principal:** "Perguntar se é necessário instalar o Spring Boot no projeto para usar suas anotações e recursos e pedir o passo a passo de configuração."
+- **O que a IA gerou:** um guia passo a passo para gerar a base do projeto Spring Boot (com Spring Web e Spring Data JPA), adicionar dependências do SQLite (`sqlite-jdbc` e dialeto Hibernate), organizar os pacotes dentro de `backend/` e ajustar o `ci.yml` para build com Maven/Gradle.
+- **O que o time aproveitou:** Aproveitamos o tutorial de instalação e configuração do Spring Boot.
+- **O que o time corrigiu ou rejeitou, e por quê:** Adaptamos o estilo das pastas e a ordem da estrutura conforme a organização que já existia no nosso projeto.
+
+### [26/11] — [Organização do Maven e Execução do Projeto]
+
+- **Prompt principal:** "Pedir orientação sobre a organização do Maven (com controllers e estrutura do backend) e resolver o erro de `mvn` não encontrado ao rodar o projeto."
+- **O que a IA gerou:** uma explicação sobre o erro `bash: mvn: command not found` (falta do Maven global ou fora do `PATH`), sugerindo usar `./mvnw` ou rodar direto pelo VS Code, além do passo a passo para instalar o Maven e configurar o `PATH`.
+- **O que o time aproveitou:** Aproveitamos o tutorial de organização e execução do projeto.
+- **O que o time corrigiu ou rejeitou, e por quê:** Corrigimos o ponto de o `mvn` não estar funcionando direito no ambiente e adaptamos direto no código.
+
+### [data] — [Ajuste no Spring Boot e Retorno JSON da API]
+
+- **Prompt principal:** "Pedir ajuda para corrigir o retorno JSON da API no Spring Boot quando o banco não devolvia o formato esperado e validar o fluxo com o frontend."
+- **O que a IA gerou:** um roteiro de validação em três etapas para confirmar o JSON em `http://localhost:8080/api/questions`, testar a criação e persistência no SQLite (`smart_mentorship.db`) após reload e checar outras rotas/páginas do frontend quanto a CORS ou erros de requisição.
+- **O que o time aproveitou:** Aproveitamos o roteiro de testes e validação do fluxo.
+- **O que o time corrigiu ou rejeitou, e por quê:** Tivemos que adaptar quase tudo porque não estava funcionando de jeito nenhum e descartamos arrumar a visualização da API em si, pois servia apenas para checar o `localhost` e já funcionava nos testes, seguindo direto para a próxima etapa.
+
+### [26/11] — [Próximos Passos Após o Login e Integração com o Banco]
+
+- **Prompt principal:** "Perguntar quais são os próximos passos no projeto após o login estar funcionando e retornando dados do banco."
+- **O que a IA gerou:** um plano de continuação com três passos para conectar a sessão do usuário ao restante do fluxo: enviar o autor autenticado ao criar perguntas no SQLite, exibir os dados do usuário logado na interface e estruturar a área do professor (`teacher.html`) para listar perguntas e atualizar estados/respostas.
+- **O que o time aproveitou:** Avaliamos o que já funcionava na lista sugerida.
+- **O que o time corrigiu ou rejeitou, e por quê:** Na adaptação, focamos no back-end porque a parte visual já funcionava o suficiente para testar o fluxo.
+
+### [26/11] — [Polimento do Backend e QuestionController]
+
+- **Prompt principal:** "Enviar o código decompilado do `QuestionController` para polir o backend antes de avançar para o front-end."
+- **O que a IA gerou:** uma revisão apontando problemas no código decompilado (`access$10` no `GET` e configuração incompleta de CORS para `PUT`), acompanhada de um `QuestionController.java` corrigido e um passo a passo para colar no código-fonte real, reiniciar o backend com build limpo e testar o envio de respostas em `teacher.html`.
+- **O que o time aproveitou:** Aproveitamos os códigos e algumas sugestões.
+- **O que o time corrigiu ou rejeitou, e por quê:** Vários trechos de código foram adaptados por nós para manter a compatibilidade com o projeto.
+
+### [27/11] — [Implementação do Front-end e Integração com Triagem do Back-end]
+
+- **Prompt principal:** "Apresentar os arquivos iniciais do front-end (`student.html`, `student.js`, `teacher.html` e `teacher.js`) para integrar com a API e os dados de triagem do back-end."
+- **O que a IA gerou:** uma atualização para `student.js` e `teacher.js` mantendo a estrutura visual e conectando os dados de triagem do back-end: exibição de badges (`subject`, `topic` e `difficulty`), painel de retorno ao enviar dúvida (com sugestão de reescrita e alerta de duplicidade) na tela do aluno, pré-preenchimento do rascunho sugerido pela IA na tela do professor e roteiro de testes no navegador.
+- **O que o time aproveitou:** O código feito pela IA para implementação no frontend
+- **O que o time corrigiu ou rejeitou, e por quê:** Algumas das ideias que precisávamos implementar mas a IA não colocou.
+
+### [27/11] — [Campos de Triagem, Múltiplas Respostas e Avaliações no Front-end]
+
+- **Prompt principal:** "Cobrar a implementação de matéria, assunto e dificuldade, o suporte a múltiplas respostas para permitir avaliação, e a organização das pastas."
+- **O que a IA gerou:** uma explicação sobre como matéria, assunto e dificuldade dependem da classificação real no `QuestionTriageService.java` e do controle na tela do estudante, além de detalhar a evolução de resposta única para múltiplas respostas com avaliação no banco/backend e na exibição/interação do front-end.
+- **O que o time aproveitou:** Aproveitamos o código e algumas orientações.
+- **O que o time corrigiu ou rejeitou, e por quê:** Corrigimos alguns pontos e adaptamos para incluir nossas ideias diretamente no front-end, fazendo os filtros e as avaliações funcionarem.
+
+### [27/11] — [Correção de Bugs e Ajustes Pontuais]
+
+- **Prompt principal:** "Relatar um ciclo de várias mensagens de depuração e correção de bugs no projeto para manter o registro resumido."
+- **O que a IA gerou:** códigos e soluções pontuais para resolver erros encontrados durante o desenvolvimento.
+- **O que o time aproveitou:** Aproveitamos os códigos retornados pela IA que funcionaram na aplicação.
+- **O que o time corrigiu ou rejeitou, e por quê:** Corrigimos pontualmente conforme os erros apareciam durante os testes.
+
+### [27/11] — [Parâmetros de Avaliação de Respostas e Filtros]
+
+- **Prompt principal:** "Definir os parâmetros para avaliação de respostas e filtros no sistema e registrar o ciclo de implementação."
+- **O que a IA gerou:** códigos e sugestões para estruturar os parâmetros de avaliação e os filtros das perguntas/respostas.
+- **O que o time aproveitou:** Aproveitamos os códigos gerados como ponto de partida.
+- **O que o time corrigiu ou rejeitou, e por quê:** Corrigimos e adaptamos conforme o que queríamos, pois havia muitos bugs e o visual não correspondia às nossas expectativas.
+
+### [27/11] — [Ajustes na Integração com a IA (Gemini) e Fallback de Modelos]
+
+- **Prompt principal:** Pedimos para arrumar a API key e implementar o Gemini para filtros e avaliação de dificuldade separando matéria, conteúdo e dificuldade e gerar sugestão de resposta para o professor."
+- **O que a IA gerou:** Códigos com sugestões de como implementar o Gemini e algumas orientações do que fazer os testes para saber os modelos disponiveis na chave de API dentro do código
+- **O que o time aproveitou:** Aproveitamos o código gerado como base para a integração.
+- **O que o time corrigiu ou rejeitou, e por quê:** Tivemos que corrigir muitos pontos por falhas conceituais nos códigos iniciais e solicitamos o fallback percorrendo todos os modelos disponiveis com 3 tentativas cada porque as abordagens anteriores da IA não funcionavam na prática. Então, caso houvesse algum erro num modelo, ele passaria para o próximo e não travaria o sistema.
+
+### [28/11] — [Ajustes Finais no Front-end a Partir do Design no Canva]
+
+- **Prompt principal:** "Enviar o visual criado no Canva para ajustar o código para o modelo final do front-end."
+- **O que a IA gerou:** códigos de front-end construídos com base nas imagens do layout desenhado no Canva.
+- **O que o time aproveitou:** Aproveitamos os códigos gerados pela IA para o modelo final do front-end.
+- **O que o time corrigiu ou rejeitou, e por quê:** Não aderimos a nenhuma sugestão adicional porque já tínhamos todo o nosso front-end definido antes do envio para a IA.

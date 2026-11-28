@@ -30,3 +30,24 @@ formRegistro.addEventListener('submit', async (event) => {
         alert('Não foi possível conectar ao servidor. O cadastro não foi salvo.');
     }
 });
+const passwordInput = document.getElementById("password");
+const togglePasswordBtn = document.getElementById("toggle-password");
+
+if (passwordInput && togglePasswordBtn) {
+  const eyeIcon = togglePasswordBtn.querySelector(".icon-eye");
+  const eyeOffIcon = togglePasswordBtn.querySelector(".icon-eye-off");
+
+  togglePasswordBtn.addEventListener("click", () => {
+    const isHidden = passwordInput.type === "password";
+    passwordInput.type = isHidden ? "text" : "password";
+
+    eyeIcon.classList.toggle("is-visible", !isHidden);
+    eyeOffIcon.classList.toggle("is-visible", isHidden);
+
+    togglePasswordBtn.setAttribute("aria-pressed", String(isHidden));
+    togglePasswordBtn.setAttribute(
+      "aria-label",
+      isHidden ? "Ocultar senha" : "Mostrar senha"
+    );
+  });
+}

@@ -6,180 +6,289 @@
 
 body {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  background-color: #d6d6d6;
-  color: #161616;
+  background-color: #f3f5f8;
+  color: #0b1830;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-/* Cartão central estilo mockup */
-body > h1,
-body > form,
-body > p {
-  width: 100%;
-  max-width: 680px;
-  background-color: #fdf3f2;
-  border-left: 1px solid #f2e4e2;
-  border-right: 1px solid #f2e4e2;
+.split-layout {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
-body > h1 {
-  font-size: clamp(2rem, 4vw, 2.75rem);
+/* Lado esquerdo azul-marinho */
+.brand-panel {
+  background-color: #0b1830;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 56px;
+}
+
+.brand-content {
+  width: 100%;
+  max-width: 440px;
+}
+
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.55rem;
   font-weight: 800;
   letter-spacing: -0.02em;
-  line-height: 1.1;
-  padding: 40px 44px 6px;
-  border-top: 1px solid #f2e4e2;
-  border-radius: 28px 28px 0 0;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+  color: #ffffff;
+  margin-bottom: 32px;
 }
 
-body > h1::before {
-  content: "Smart Mentorship";
-  display: block;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #555555;
-  margin-bottom: 6px;
-  letter-spacing: 0;
+.brand-badge {
+  display: inline-block;
+  background-color: #f7d842;
+  color: #0b1830;
+  padding: 1px 6px;
+  margin-left: 2px;
+  border-radius: 3px;
+  font-weight: 800;
+}
+
+.brand-content h1 {
+  font-size: clamp(2.2rem, 3.6vw, 3.25rem);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  margin-bottom: 24px;
+}
+
+.brand-content p {
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: #c7d0de;
+  max-width: 390px;
+}
+
+/* Lado direito do formulário */
+.form-panel {
+  background-color: #f3f5f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 40px;
+}
+
+.form-wrapper {
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-wrapper h2 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #0b1830;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
 }
 
 #form-registro {
-  padding: 8px 44px 20px;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px 24px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
-}
-
-#form-registro > div:nth-child(-n+3) {
   display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-#form-registro input[type="text"],
-#form-registro input[type="email"],
-#form-registro input[type="password"] {
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-group label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0b1830;
+}
+
+.field-group input {
   width: 100%;
-  padding: 12px 16px;
-  font-size: 1rem;
-  color: #161616;
+  height: 44px;
+  padding: 10px 14px;
+  font-size: 0.98rem;
+  color: #0b1830;
   background-color: #ffffff;
-  border: 1px solid #d8d8d8;
-  border-radius: 10px;
+  border: 1px solid #cbd3df;
+  border-radius: 8px;
   outline: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-#form-registro input::placeholder {
-  color: #6f6f6f;
+.field-group input:focus {
+  border-color: #0057a8;
+  box-shadow: 0 0 0 3px rgba(0, 87, 168, 0.14);
 }
 
-#form-registro input:focus {
-  border-color: #525252;
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
-}
-
-/* Seleção de perfil (Estudante / Professor) */
-#form-registro fieldset {
-  grid-column: 1 / -1;
-  border: 1px solid #e7d7d5;
-  border-radius: 12px;
-  padding: 12px 16px 14px;
-  background-color: rgba(255, 255, 255, 0.55);
+/* Campo de senha com botão de mostrar/ocultar */
+.password-wrapper {
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 12px 24px;
+  width: 100%;
 }
 
-#form-registro legend {
-  padding: 0 6px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #4a4a4a;
+.password-wrapper input {
+  width: 100%;
+  padding-right: 44px;
 }
 
-#form-registro fieldset > div {
+.toggle-password {
+  position: absolute;
+  right: 10px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-}
-
-#form-registro input[type="radio"] {
-  width: 17px;
-  height: 17px;
-  accent-color: #161616;
-  cursor: pointer;
-}
-
-#form-registro fieldset label {
-  font-size: 0.98rem;
-  color: #222222;
-  cursor: pointer;
-}
-
-/* Botão de envio */
-#form-registro > div:last-child {
-  grid-column: 1 / -1;
-  display: flex;
-  justify-content: flex-start;
-  padding-top: 4px;
-}
-
-#form-registro button[type="submit"] {
-  padding: 12px 28px;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #ffffff;
-  background-color: #161616;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
   border: none;
-  border-radius: 10px;
+  border-radius: 6px;
+  color: #4f5d73;
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.toggle-password:hover {
+  color: #0b1830;
+  background-color: #eef2f7;
+}
+
+.toggle-password:focus-visible {
+  outline: 2px solid #0057a8;
+  outline-offset: 1px;
+}
+
+.toggle-password svg {
+  display: none;
+}
+
+.toggle-password svg.is-visible {
+  display: block;
+}
+
+/* Cartões de seleção de perfil (Estudante / Professor) */
+.role-group {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.role-group legend {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0b1830;
+  margin-bottom: 10px;
+}
+
+.role-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  background-color: #ffffff;
+  border: 1.5px solid #cbd3df;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.role-card:hover {
+  border-color: #8ca4c4;
+}
+
+.role-card input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.role-card:has(input[type="radio"]:checked) {
+  background-color: #fef6ce;
+  border-color: #0057a8;
+  box-shadow: 0 0 0 1px #0057a8;
+}
+
+.role-card:has(input[type="radio"]:focus-visible) {
+  outline: 2px solid #0057a8;
+  outline-offset: 2px;
+}
+
+.role-title {
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: #0b1830;
+}
+
+.role-desc {
+  font-size: 0.86rem;
+  color: #4f5d73;
+}
+
+/* Botão principal */
+.btn-submit {
+  width: 100%;
+  height: 46px;
+  margin-top: 8px;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #0057a8;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.15s ease, transform 0.1s ease;
 }
 
-#form-registro button[type="submit"]:hover {
-  background-color: #2f2f2f;
+.btn-submit:hover {
+  background-color: #00478a;
 }
 
-#form-registro button[type="submit"]:active {
-  transform: scale(0.99);
+.btn-submit:active {
+  transform: scale(0.995);
 }
 
-/* Rodapé com link para login */
-body > p {
-  padding: 4px 44px 36px;
-  font-size: 0.95rem;
-  color: #555555;
-  border-bottom: 1px solid #f2e4e2;
-  border-radius: 0 0 28px 28px;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.14);
+/* Rodapé */
+.login-link {
+  margin-top: 18px;
+  font-size: 0.9rem;
+  color: #4f5d73;
 }
 
-body > p a {
-  color: #161616;
+.login-link a {
+  color: #0057a8;
   font-weight: 600;
   text-decoration: underline;
-  text-underline-offset: 3px;
+  text-underline-offset: 2px;
 }
 
-body > p a:hover {
-  color: #444444;
+.login-link a:hover {
+  color: #003e7a;
 }
 
-@media (max-width: 600px) {
-  body > h1,
-  #form-registro,
-  body > p {
-    padding-left: 24px;
-    padding-right: 24px;
+/* Responsividade */
+@media (max-width: 860px) {
+  .split-layout {
+    grid-template-columns: 1fr;
   }
 
-  #form-registro {
-    grid-template-columns: 1fr;
+  .brand-panel {
+    padding: 40px 28px;
+  }
+
+  .brand-content h1 {
+    font-size: 2.1rem;
+  }
+
+  .form-panel {
+    padding: 36px 24px 48px;
   }
 }

@@ -3,41 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
-        <link rel="stylesheet" href="../css/register.css">
+    <title>Criar conta — Monitor.IA</title>
+    <link rel="stylesheet" href="../css/register.css">
 </head>
 <body>
-    <h1>Registre-se</h1>
+    <main class="split-layout">
+        <!-- Painel esquerdo (identidade visual) -->
+        <section class="brand-panel">
+            <div class="brand-content">
+                <div class="brand-logo">
+                    Monitor<span class="brand-badge">.IA</span>
+                </div>
 
-    <form id="form-registro">
-        <div>
-            <input type="text" id="name" name="name" placeholder="Nome..." required>
-        </div>
-        <div>
-            <input type="email" id="email" name="email" placeholder="Email..." required>
-        </div>
-        <div>
-            <input type="password" id="password" name="password" placeholder="Senha..." required>
-        </div>
+                <h1>Crie sua conta em menos de um minuto.</h1>
 
-        <fieldset>
-            <legend>Escolha:</legend>
-            <div>
-                <input type="radio" id="opcao1" name="role" value="Student" checked>
-                <label for="opcao1">Estudante</label>
+                <p>
+                    Estudantes enviam dúvidas e acompanham as respostas.
+                    Professores respondem e organizam a fila.
+                </p>
             </div>
-            <div>
-                <input type="radio" id="opcao2" name="role" value="Teacher">
-                <label for="opcao2">Professor</label>
+        </section>
+
+        <!-- Painel direito (formulário) -->
+        <section class="form-panel">
+            <div class="form-wrapper">
+                <h2>Criar conta</h2>
+
+                <form id="form-registro">
+                    <div class="field-group">
+                        <label for="name">Nome</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="field-group">
+<div class="field-group">
+    <label for="password">Senha</label>
+    <div class="password-wrapper">
+        <input type="password" id="password" name="password" required>
+        <button
+            type="button"
+            class="toggle-password"
+            id="toggle-password"
+            aria-label="Mostrar senha"
+            aria-pressed="false"
+        >
+            <svg class="icon-eye is-visible" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/>
+                <circle cx="12" cy="12" r="3"/>
+            </svg>
+            <svg class="icon-eye-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/>
+                <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c6.5 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/>
+                <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3.5 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/>
+                <line x1="2" y1="2" x2="22" y2="22"/>
+            </svg>
+        </button>
+    </div>
+</div></div>
+
+                    <fieldset class="role-group">
+                        <legend>Você é:</legend>
+
+                        <label class="role-card" for="opcao1">
+                            <input type="radio" id="opcao1" name="role" value="Student" checked>
+                            <span class="role-title">Estudante</span>
+                            <span class="role-desc">Envia dúvidas e acompanha as respostas.</span>
+                        </label>
+
+                        <label class="role-card" for="opcao2">
+                            <input type="radio" id="opcao2" name="role" value="Teacher">
+                            <span class="role-title">Professor</span>
+                            <span class="role-desc">Responde às dúvidas dos estudantes.</span>
+                        </label>
+                    </fieldset>
+
+                    <button type="submit" class="btn-submit">Criar conta</button>
+                </form>
+
+                <p class="login-link">Já tem conta? <a href="login.html">Entrar</a></p>
             </div>
-        </fieldset>
-
-        <div>
-            <button type="submit">Registre-se</button>
-        </div>
-    </form>
-
-    <p>Já tem conta? <a href="login.html">Entrar</a></p>
+        </section>
+    </main>
 
     <script src="../js/registro.js"></script>
 </body>

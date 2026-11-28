@@ -3,30 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Mentorship — Professor</title>
+    <title>Monitor.IA — Professor</title>
     <link rel="stylesheet" href="../css/teacher.css">
 </head>
 <body>
-    <header>
-        <div>
-            <div class="tag">HACKATHON</div>
-            <div class="project-title">Smart Mentorship</div>
+    <header class="topbar" id="topbar">
+        <div class="topbar-inner">
+            <div class="brand-logo" aria-label="Monitor.IA">
+                Monitor<span class="brand-badge">.IA</span>
+            </div>
+
+            <div class="header-right">
+                <div class="teacher-pill" id="teacher-name" aria-label="Monitor conectado"></div>
+                <button type="button" class="btn-logout" id="btn-logout" onclick="window.location.href='login.html'">Sair</button>
+            </div>
         </div>
-        <div id="teacher-name" aria-label="Monitor conectado"></div>
     </header>
 
-    <main>
+    <main class="page-content">
         <div class="page-heading">
             <div>
                 <h1>Perguntas dos estudantes</h1>
                 <p>Revise as dúvidas e publique respostas quando estiverem prontas.</p>
             </div>
-            <button type="button" id="refresh-questions">Atualizar perguntas</button>
+            <button type="button" id="refresh-questions" class="btn-refresh">Atualizar perguntas</button>
         </div>
-        <p id="message" aria-live="polite" role="status"></p>
-        <section id="feed" aria-label="Lista de perguntas"></section>
+
+        <p id="message" class="status-message" aria-live="polite" role="status"></p>
+        <section id="feed" class="feed-list" aria-label="Lista de perguntas"></section>
     </main>
 
+    <script>
+        (function () {
+            const topbar = document.getElementById("topbar");
+            if (!topbar) return;
+
+            function syncHeaderScroll() {
+                topbar.classList.toggle("is-scrolled", window.scrollY > 14);
+            }
+
+            window.addEventListener("scroll", syncHeaderScroll, { passive: true });
+            syncHeaderScroll();
+        })();
+    </script>
     <script src="../js/teacher.js"></script>
 </body>
 </html>

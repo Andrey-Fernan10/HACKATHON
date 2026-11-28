@@ -26,10 +26,31 @@ formLogin.addEventListener('submit', async (event) => {
             return;
         }
 
-        const user = await response.json(); 
+        const user = await response.json();
         localStorage.setItem('loggedUser', JSON.stringify(user));
         redirectByRole(user.role);
     } catch (error) {
         alert('Não foi possível conectar ao servidor. Tente novamente quando o back-end estiver disponível.');
     }
 });
+
+const loginPasswordInput = document.getElementById('password');
+const loginTogglePasswordBtn = document.getElementById('toggle-password');
+
+if (loginPasswordInput && loginTogglePasswordBtn) {
+    const eyeIcon = loginTogglePasswordBtn.querySelector('.icon-eye');
+    const eyeOffIcon = loginTogglePasswordBtn.querySelector('.icon-eye-off');
+
+    loginTogglePasswordBtn.addEventListener('click', () => {
+        const isHidden = loginPasswordInput.type === 'password';
+        loginPasswordInput.type = isHidden ? 'text' : 'password';
+
+        if (eyeIcon) eyeIcon.classList.toggle('is-visible', !isHidden);
+        if (eyeOffIcon) eyeOffIcon.classList.toggle('is-visible', isHidden);
+
+        loginTogglePasswordBtn.setAttribute(
+            'aria-label',
+            isHidden ? 'Ocultar senha' : 'Mostrar senha'
+        );
+    });
+}

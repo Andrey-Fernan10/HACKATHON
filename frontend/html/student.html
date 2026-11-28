@@ -3,108 +3,144 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart Mentorship — Estudante</title>
+  <title>Monitor.IA — Estudante</title>
   <link rel="stylesheet" href="../css/student.css" />
 </head>
 <body>
   <header class="topbar" id="topbar">
-    <div class="brand-wrap">
-      <div class="tag">HACKATHON</div>
-      <div class="project-title">Smart Mentorship</div>
-    </div>
-
-    <div class="topbar-search-slot" id="topbar-search-slot" aria-hidden="true"></div>
-
-    <div class="header-actions">
-      <div class="notif-wrapper">
-        <button type="button" class="icon-btn" id="btn-notif" title="Notificações" aria-expanded="false" aria-controls="notif-panel">
-          🔔
-        </button>
-        <aside class="notif-panel" id="notif-panel" aria-label="Notificações" hidden>
-          <div class="notif-header">
-            <span>Notificações</span>
-            <button type="button" class="notif-close" id="btn-close-notif" aria-label="Fechar notificações">✕</button>
-          </div>
-          <div class="notif-body" id="notif-list">
-            <p class="notif-empty">Nenhuma novidade no momento. Quando uma pergunta for respondida, ela aparece aqui.</p>
-          </div>
-        </aside>
+    <div class="topbar-inner">
+      <div class="brand-logo" aria-label="Monitor.IA">
+        Monitor<span class="brand-badge">.IA</span>
       </div>
 
-      <button type="button" class="icon-btn" id="btn-user" title="Perfil (em breve)">👤</button>
+      <div class="topbar-search-slot" id="topbar-search-slot" aria-hidden="true"></div>
+
+      <div class="header-right">
+        <div class="notif-wrapper">
+          <button type="button" class="notif-btn" id="btn-notif" title="Notificações" aria-label="Notificações" aria-expanded="false" aria-controls="notif-panel">
+            🔔
+          </button>
+          <aside class="notif-panel" id="notif-panel" aria-label="Notificações" hidden>
+            <div class="notif-header">
+              <span>Notificações</span>
+              <button type="button" class="notif-close" id="btn-close-notif" aria-label="Fechar notificações">✕</button>
+            </div>
+            <div class="notif-body" id="notif-list">
+              <p class="notif-empty">Nenhuma novidade no momento. Quando uma pergunta for respondida, ela aparece aqui.</p>
+            </div>
+          </aside>
+        </div>
+
+        <div class="user-info" id="user-info">
+          <span class="user-name" id="user-name">Estudante</span>
+          <span class="user-role" id="user-role">Estudante</span>
+        </div>
+
+        <button type="button" class="btn-logout" id="btn-logout">Sair</button>
+      </div>
     </div>
   </header>
 
   <main class="page-content">
-    <section class="hero-stage" id="hero-stage">
-      <div class="hero-inner">
-        <span class="hero-kicker">SMART MENTORSHIP</span>
-        <h1 class="hero-title">Tire dúvidas e acompanhe respostas com calma</h1>
-        <p class="hero-subtitle">Pesquise perguntas já respondidas ou abra a caixa de envio a qualquer momento pelo botão no canto da tela.</p>
+    <section class="composer-hero" id="composer-hero">
+      <h1 class="page-heading">Qual é a sua dúvida?</h1>
 
-        <div class="hero-search-anchor" id="hero-search-anchor">
-          <form class="search-box" id="form-search">
-            <input type="search" id="search-input" placeholder="Pesquisar perguntas..." autocomplete="off" />
-            <button type="submit" aria-label="Pesquisar">🔍</button>
+      <form class="ask-form" id="form-question">
+        <div class="textarea-wrap">
+          <textarea
+            id="question-text"
+            maxlength="1000"
+            placeholder="Escreva com detalhes: o assunto, o que você tentou e onde travou."
+            required
+          ></textarea>
+          <div class="char-counter" id="char-counter">0/1000</div>
+        </div>
+
+        <div class="ask-actions">
+          <button type="submit" class="btn-primary" id="btn-send-question">Enviar pergunta</button>
+          <span class="ask-helper">A Monitor.IA analisa sua pergunta e o professor responde.</span>
+        </div>
+      </form>
+    </section>
+
+    <section class="feed-section" aria-label="Perguntas e respostas">
+      <div class="tabs-bar" role="tablist">
+        <button type="button" class="tab-btn is-active" id="tab-mine" role="tab" aria-selected="true" data-tab="mine">
+          Minhas perguntas <span class="tab-count" id="mine-count">0</span>
+        </button>
+        <button type="button" class="tab-btn" id="tab-answered" role="tab" aria-selected="false" data-tab="answered">
+          Já respondidas
+        </button>
+      </div>
+
+      <div class="search-anchor" id="search-anchor">
+        <div class="filter-toolbar" id="filter-toolbar">
+          <form class="search-row" id="form-search">
+            <input
+              type="search"
+              id="search-input"
+              class="search-input"
+              placeholder="Buscar por palavra, ex.: herança"
+              autocomplete="off"
+            />
+            <button type="submit" class="btn-outline-blue" id="btn-search">Buscar</button>
           </form>
+
+          <div class="selects-row">
+            <div class="select-group">
+              <label for="filter-subject">Matéria</label>
+              <select id="filter-subject" class="filter-select">
+                <option value="">Todas as matérias</option>
+              </select>
+            </div>
+
+            <div class="select-group">
+              <label for="filter-topic">Assunto</label>
+              <select id="filter-topic" class="filter-select">
+                <option value="">Todos os assuntos</option>
+              </select>
+            </div>
+
+            <div class="select-group">
+              <label for="filter-difficulty">Dificuldade</label>
+              <select id="filter-difficulty" class="filter-select">
+                <option value="">Todas as dificuldades</option>
+                <option value="Básico">Básico</option>
+                <option value="Intermediário">Intermediário</option>
+                <option value="Avançado">Avançado</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
-    </section>
 
-    <section class="results-section">
-      <div id="feed"></div>
-    </section>
-
-    <section class="below-fold-section" aria-label="Mais sobre o projeto">
-      <span class="section-pill">SMART MENTORSHIP</span>
-      <h2>Um espaço limpo para estudar sem poluição visual</h2>
-      <p>Enquanto você rola a página, a busca acompanha discretamente no topo e a caixa para escrever sua pergunta fica recolhida até você tocar no botão redondo no canto inferior.</p>
+      <div id="feed" class="feed-list"></div>
     </section>
   </main>
 
-  <!-- Botão redondo fixo no canto inferior direito -->
-  <button type="button" class="fab-ask" id="fab-ask" title="Fazer uma pergunta" aria-label="Fazer uma pergunta" aria-expanded="false" aria-controls="composer-drawer">
-    +
-  </button>
-
-  <!-- Fundo suave e caixa de pergunta confortável -->
-  <div class="composer-backdrop" id="composer-backdrop" hidden></div>
-  <aside class="composer-drawer" id="composer-drawer" aria-label="Enviar nova pergunta" hidden>
-    <div class="composer-header">
-      <div>
-        <span class="composer-kicker">NOVA DÚVIDA</span>
-        <h3>Escrever pergunta</h3>
-      </div>
-      <button type="button" class="composer-close" id="btn-close-composer" aria-label="Fechar caixa de pergunta">✕</button>
-    </div>
-
-    <form class="ask-form" id="form-question">
-      <label for="question-text">Sua pergunta</label>
-      <textarea id="question-text" maxlength="1000" placeholder="Digite aqui sua pergunta com calma e clareza..." required></textarea>
-      <div class="ask-footer">
-        <span class="ask-hint">Enviado diretamente para a mentoria</span>
-        <button type="submit" class="btn-send">Enviar</button>
-      </div>
-    </form>
-  </aside>
-
   <script>
     (function () {
+      const topbar = document.getElementById("topbar");
+      const searchAnchor = document.getElementById("search-anchor");
+      const toolbar = document.getElementById("filter-toolbar");
+      const topbarSlot = document.getElementById("topbar-search-slot");
+
+      const textarea = document.getElementById("question-text");
+      const charCounter = document.getElementById("char-counter");
+
       const btnNotif = document.getElementById("btn-notif");
       const notifPanel = document.getElementById("notif-panel");
       const btnCloseNotif = document.getElementById("btn-close-notif");
 
-      const searchBox = document.getElementById("form-search");
-      const heroAnchor = document.getElementById("hero-search-anchor");
-      const topbarSlot = document.getElementById("topbar-search-slot");
-      const topbar = document.getElementById("topbar");
+      const tabButtons = document.querySelectorAll(".tab-btn");
 
-      const fabAsk = document.getElementById("fab-ask");
-      const composerDrawer = document.getElementById("composer-drawer");
-      const composerBackdrop = document.getElementById("composer-backdrop");
-      const btnCloseComposer = document.getElementById("btn-close-composer");
-      const questionTextarea = document.getElementById("question-text");
-      const formQuestion = document.getElementById("form-question");
+      if (textarea && charCounter) {
+        const updateCounter = function () {
+          charCounter.textContent = textarea.value.length + "/1000";
+        };
+        textarea.addEventListener("input", updateCounter);
+        updateCounter();
+      }
 
       if (btnNotif && notifPanel) {
         btnNotif.addEventListener("click", function (event) {
@@ -134,87 +170,41 @@
         });
       }
 
-      function syncSearchPosition() {
-        if (!searchBox || !heroAnchor || !topbarSlot || !topbar) return;
-        const triggerPoint = heroAnchor.getBoundingClientRect().top - topbar.offsetHeight + 18;
-        const shouldDock = window.scrollY > 40 && triggerPoint <= 0;
+      tabButtons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          tabButtons.forEach(function (item) {
+            const active = item === btn;
+            item.classList.toggle("is-active", active);
+            item.setAttribute("aria-selected", String(active));
+          });
+        });
+      });
 
-        if (shouldDock && searchBox.parentElement !== topbarSlot) {
-          topbarSlot.appendChild(searchBox);
+      function syncHeaderAndSearch() {
+        if (!topbar || !searchAnchor || !toolbar || !topbarSlot) return;
+
+        const scrolled = window.scrollY > 16;
+        topbar.classList.toggle("is-scrolled", scrolled);
+
+        const anchorRect = searchAnchor.getBoundingClientRect();
+        const shouldDock = anchorRect.top <= topbar.offsetHeight + 4;
+
+        if (shouldDock && toolbar.parentElement !== topbarSlot) {
+          searchAnchor.style.minHeight = toolbar.offsetHeight + "px";
+          topbarSlot.appendChild(toolbar);
           topbarSlot.classList.add("is-visible");
           topbar.classList.add("is-docked");
-        } else if (!shouldDock && searchBox.parentElement !== heroAnchor) {
-          heroAnchor.appendChild(searchBox);
+        } else if (!shouldDock && toolbar.parentElement !== searchAnchor) {
+          searchAnchor.appendChild(toolbar);
+          searchAnchor.style.minHeight = "";
           topbarSlot.classList.remove("is-visible");
           topbar.classList.remove("is-docked");
         }
       }
 
-      window.addEventListener("scroll", syncSearchPosition, { passive: true });
-      window.addEventListener("resize", syncSearchPosition, { passive: true });
-      syncSearchPosition();
-
-      function openComposer() {
-        if (!composerDrawer || !composerBackdrop || !fabAsk) return;
-        composerBackdrop.removeAttribute("hidden");
-        composerDrawer.removeAttribute("hidden");
-        requestAnimationFrame(function () {
-          composerBackdrop.classList.add("is-open");
-          composerDrawer.classList.add("is-open");
-        });
-        fabAsk.setAttribute("aria-expanded", "true");
-        setTimeout(function () {
-          if (questionTextarea) questionTextarea.focus();
-        }, 140);
-      }
-
-      function closeComposer() {
-        if (!composerDrawer || !composerBackdrop || !fabAsk) return;
-        composerBackdrop.classList.remove("is-open");
-        composerDrawer.classList.remove("is-open");
-        fabAsk.setAttribute("aria-expanded", "false");
-        setTimeout(function () {
-          if (!composerDrawer.classList.contains("is-open")) {
-            composerDrawer.setAttribute("hidden", "");
-            composerBackdrop.setAttribute("hidden", "");
-          }
-        }, 220);
-      }
-
-      if (fabAsk) {
-        fabAsk.addEventListener("click", function () {
-          const isOpen = composerDrawer && !composerDrawer.hasAttribute("hidden") && composerDrawer.classList.contains("is-open");
-          if (isOpen) {
-            closeComposer();
-          } else {
-            openComposer();
-          }
-        });
-      }
-
-      if (btnCloseComposer) {
-        btnCloseComposer.addEventListener("click", closeComposer);
-      }
-
-      if (composerBackdrop) {
-        composerBackdrop.addEventListener("click", closeComposer);
-      }
-
-      if (formQuestion) {
-        formQuestion.addEventListener("submit", function () {
-          setTimeout(closeComposer, 120);
-        });
-      }
-
-      document.addEventListener("keydown", function (event) {
-        if (event.key === "Escape") {
-          closeComposer();
-          if (notifPanel && !notifPanel.hasAttribute("hidden")) {
-            notifPanel.setAttribute("hidden", "");
-            if (btnNotif) btnNotif.setAttribute("aria-expanded", "false");
-          }
-        }
-      });
+      window.addEventListener("scroll", syncHeaderAndSearch, { passive: true });
+      window.addEventListener("resize", syncHeaderAndSearch, { passive: true });
+      syncHeaderAndSearch();
     })();
   </script>
   <script src="../js/student.js"></script>
