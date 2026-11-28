@@ -1,0 +1,265 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #f3f5f8;
+  color: #0b1830;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.split-layout {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* Lado esquerdo azul-marinho */
+.brand-panel {
+  background-color: #0b1830;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 56px;
+}
+
+.brand-content {
+  width: 100%;
+  max-width: 450px;
+}
+
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.55rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin-bottom: 32px;
+}
+
+.brand-badge {
+  display: inline-block;
+  background-color: #f7d842;
+  color: #0b1830;
+  padding: 1px 6px;
+  margin-left: 2px;
+  border-radius: 3px;
+  font-weight: 800;
+}
+
+.brand-content h1 {
+  font-size: clamp(2.2rem, 3.6vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  margin-bottom: 24px;
+}
+
+.brand-subtitle {
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: #c7d0de;
+  max-width: 390px;
+  margin-bottom: 28px;
+}
+
+.brand-steps {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-size: 0.96rem;
+  line-height: 1.45;
+  color: #e6ecf5;
+}
+
+.brand-steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.step-num {
+  color: #f7d842;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+/* Lado direito do formulário */
+.form-panel {
+  background-color: #f3f5f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 40px;
+}
+
+.form-wrapper {
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-wrapper h2 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #0b1830;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+
+#form-login {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-group label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0b1830;
+}
+
+.field-group input {
+  width: 100%;
+  height: 44px;
+  padding: 10px 14px;
+  font-size: 0.98rem;
+  color: #0b1830;
+  background-color: #ffffff;
+  border: 1px solid #cbd3df;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.field-group input:focus {
+  border-color: #0057a8;
+  box-shadow: 0 0 0 3px rgba(0, 87, 168, 0.14);
+}
+
+/* Campo de senha com botão de mostrar/ocultar */
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 64px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 8px;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0b1830;
+  background-color: #eef2f7;
+  border: 1px solid #cbd3df;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.toggle-password:hover {
+  background-color: #dfe6f0;
+}
+
+.toggle-password:focus-visible {
+  outline: 2px solid #0057a8;
+  outline-offset: 1px;
+}
+
+/* Botão principal */
+.btn-submit {
+  width: 100%;
+  height: 46px;
+  margin-top: 8px;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #0057a8;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.btn-submit:hover {
+  background-color: #00478a;
+}
+
+.btn-submit:active {
+  transform: scale(0.995);
+}
+
+/* Mensagem de retorno do login */
+.login-message {
+  margin-top: 12px;
+  min-height: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0b1830;
+}
+
+.login-message:empty {
+  display: none;
+}
+
+/* Rodapé */
+.register-link {
+  margin-top: 16px;
+  font-size: 0.9rem;
+  color: #4f5d73;
+}
+
+.register-link a {
+  color: #0057a8;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.register-link a:hover {
+  color: #003e7a;
+}
+
+/* Responsividade */
+@media (max-width: 860px) {
+  .split-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-panel {
+    padding: 40px 28px;
+  }
+
+  .brand-content h1 {
+    font-size: 2.1rem;
+  }
+
+  .form-panel {
+    padding: 36px 24px 48px;
+  }
+}
+.toggle-password svg {
+  display: none;
+}
+
+.toggle-password svg.is-visible {
+  display: block;
+}

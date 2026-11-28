@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monitor.IA — Estudante</title>
+  <link rel="stylesheet" href="../css/student.css" />
+</head>
+<body>
+  <header class="topbar" id="topbar">
+    <div class="topbar-inner">
+      <div class="brand-logo" aria-label="Monitor.IA">
+        Monitor<span class="brand-badge">.IA</span>
+      </div>
+
+      <div class="topbar-search-slot" id="topbar-search-slot" aria-hidden="true"></div>
+
+      <div class="header-right">
+        <div class="notif-wrapper">
+          <button type="button" class="notif-btn" id="btn-notif" title="Notificações" aria-label="Notificações" aria-expanded="false" aria-controls="notif-panel">
+            🔔
+          </button>
+          <aside class="notif-panel" id="notif-panel" aria-label="Notificações" hidden>
+            <div class="notif-header">
+              <span>Notificações</span>
+              <button type="button" class="notif-close" id="btn-close-notif" aria-label="Fechar notificações">✕</button>
+            </div>
+            <div class="notif-body" id="notif-list">
+              <p class="notif-empty">Nenhuma novidade no momento. Quando uma pergunta for respondida, ela aparece aqui.</p>
+            </div>
+          </aside>
+        </div>
+
+        <div class="user-info" id="user-info">
+          <span class="user-name" id="user-name">Estudante</span>
+          <span class="user-role" id="user-role">Estudante</span>
+        </div>
+
+        <button type="button" class="btn-logout" id="btn-logout">Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <section class="composer-hero" id="composer-hero">
+      <h1 class="page-heading">Qual é a sua dúvida?</h1>
+
+      <form class="ask-form" id="form-question">
+        <div class="textarea-wrap">
+          <textarea
+            id="question-text"
+            maxlength="1000"
+            placeholder="Escreva com detalhes: o assunto, o que você tentou e onde travou."
+            required
+          ></textarea>
+          <div class="char-counter" id="char-counter">0/1000</div>
+        </div>
+
+        <div class="ask-actions">
+          <button type="submit" class="btn-primary" id="btn-send-question">Enviar pergunta</button>
+          <span class="ask-helper">A Monitor.IA analisa sua pergunta e o professor responde.</span>
+        </div>
+      </form>
+    </section>
+
+    <section class="feed-section" aria-label="Perguntas e respostas">
+      <div class="tabs-bar" role="tablist">
+        <button type="button" class="tab-btn is-active" id="tab-mine" role="tab" aria-selected="true" data-tab="mine">
+          Minhas perguntas <span class="tab-count" id="mine-count">0</span>
+        </button>
+        <button type="button" class="tab-btn" id="tab-answered" role="tab" aria-selected="false" data-tab="answered">
+          Já respondidas
+        </button>
+      </div>
+
+      <div class="search-anchor" id="search-anchor">
+        <div class="filter-toolbar" id="filter-toolbar">
+          <form class="search-row" id="form-search">
+            <input
+              type="search"
+              id="search-input"
+              class="search-input"
+              placeholder="Buscar por palavra, ex.: herança"
+              autocomplete="off"
+            />
+            <button type="submit" class="btn-outline-blue" id="btn-search">Buscar</button>
+          </form>
+
+          <div class="selects-row">
+            <div class="select-group">
+              <label for="filter-subject">Matéria</label>
+              <select id="filter-subject" class="filter-select">
+                <option value="">Todas as matérias</option>
+              </select>
+            </div>
+
+            <div class="select-group">
+              <label for="filter-topic">Assunto</label>
+              <select id="filter-topic" class="filter-select">
+                <option value="">Todos os assuntos</option>
+              </select>
+            </div>
+
+            <div class="select-group">
+              <label for="filter-difficulty">Dificuldade</label>
+              <select id="filter-difficulty" class="filter-select">
+                <option value="">Todas as dificuldades</option>
+                <option value="Básico">Básico</option>
+                <option value="Intermediário">Intermediário</option>
+                <option value="Avançado">Avançado</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="feed" class="feed-list"></div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const topbar = document.getElementById("topbar");
+      const searchAnchor = document.getElementById("search-anchor");
+      const toolbar = document.getElementById("filter-toolbar");
+      const topbarSlot = document.getElementById("topbar-search-slot");
+
+      const textarea = document.getElementById("question-text");
+      const charCounter = document.getElementById("char-counter");
+
+      const btnNotif = document.getElementById("btn-notif");
+      const notifPanel = document.getElementById("notif-panel");
+      const btnCloseNotif = document.getElementById("btn-close-notif");
+
+      const tabButtons = document.querySelectorAll(".tab-btn");
+
+      if (textarea && charCounter) {
+        const updateCounter = function () {
+          charCounter.textContent = textarea.value.length + "/1000";
+        };
+        textarea.addEventListener("input", updateCounter);
+        updateCounter();
+      }
+
+      if (btnNotif && notifPanel) {
+        btnNotif.addEventListener("click", function (event) {
+          event.stopPropagation();
+          const willOpen = notifPanel.hasAttribute("hidden");
+          if (willOpen) {
+            notifPanel.removeAttribute("hidden");
+            btnNotif.setAttribute("aria-expanded", "true");
+          } else {
+            notifPanel.setAttribute("hidden", "");
+            btnNotif.setAttribute("aria-expanded", "false");
+          }
+        });
+
+        if (btnCloseNotif) {
+          btnCloseNotif.addEventListener("click", function () {
+            notifPanel.setAttribute("hidden", "");
+            btnNotif.setAttribute("aria-expanded", "false");
+          });
+        }
+
+        document.addEventListener("click", function (event) {
+          if (!notifPanel.hasAttribute("hidden") && !notifPanel.contains(event.target) && event.target !== btnNotif) {
+            notifPanel.setAttribute("hidden", "");
+            btnNotif.setAttribute("aria-expanded", "false");
+          }
+        });
+      }
+
+      tabButtons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          tabButtons.forEach(function (item) {
+            const active = item === btn;
+            item.classList.toggle("is-active", active);
+            item.setAttribute("aria-selected", String(active));
+          });
+        });
+      });
+
+      function syncHeaderAndSearch() {
+        if (!topbar || !searchAnchor || !toolbar || !topbarSlot) return;
+
+        const scrolled = window.scrollY > 16;
+        topbar.classList.toggle("is-scrolled", scrolled);
+
+        const anchorRect = searchAnchor.getBoundingClientRect();
+        const shouldDock = anchorRect.top <= topbar.offsetHeight + 4;
+
+        if (shouldDock && toolbar.parentElement !== topbarSlot) {
+          searchAnchor.style.minHeight = toolbar.offsetHeight + "px";
+          topbarSlot.appendChild(toolbar);
+          topbarSlot.classList.add("is-visible");
+          topbar.classList.add("is-docked");
+        } else if (!shouldDock && toolbar.parentElement !== searchAnchor) {
+          searchAnchor.appendChild(toolbar);
+          searchAnchor.style.minHeight = "";
+          topbarSlot.classList.remove("is-visible");
+          topbar.classList.remove("is-docked");
+        }
+      }
+
+      window.addEventListener("scroll", syncHeaderAndSearch, { passive: true });
+      window.addEventListener("resize", syncHeaderAndSearch, { passive: true });
+      syncHeaderAndSearch();
+    })();
+  </script>
+  <script src="../js/student.js"></script>
+</body>
+</html>
