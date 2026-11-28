@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Mentorship — Estudante</title>
+  <link rel="stylesheet" href="../css/student.css" />
+</head>
+<body>
+  <header class="topbar" id="topbar">
+    <div class="brand-wrap">
+      <div class="tag">HACKATHON</div>
+      <div class="project-title">Smart Mentorship</div>
+    </div>
+
+    <div class="topbar-search-slot" id="topbar-search-slot" aria-hidden="true"></div>
+
+    <div class="header-actions">
+      <div class="notif-wrapper">
+        <button type="button" class="icon-btn" id="btn-notif" title="Notificações" aria-expanded="false" aria-controls="notif-panel">
+          🔔
+        </button>
+        <aside class="notif-panel" id="notif-panel" aria-label="Notificações" hidden>
+          <div class="notif-header">
+            <span>Notificações</span>
+            <button type="button" class="notif-close" id="btn-close-notif" aria-label="Fechar notificações">✕</button>
+          </div>
+          <div class="notif-body" id="notif-list">
+            <p class="notif-empty">Nenhuma novidade no momento. Quando uma pergunta for respondida, ela aparece aqui.</p>
+          </div>
+        </aside>
+      </div>
+
+      <button type="button" class="icon-btn" id="btn-user" title="Perfil (em breve)">👤</button>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <section class="hero-stage" id="hero-stage">
+      <div class="hero-inner">
+        <span class="hero-kicker">SMART MENTORSHIP</span>
+        <h1 class="hero-title">Tire dúvidas e acompanhe respostas com calma</h1>
+        <p class="hero-subtitle">Pesquise perguntas já respondidas ou abra a caixa de envio a qualquer momento pelo botão no canto da tela.</p>
+
+        <div class="hero-search-anchor" id="hero-search-anchor">
+          <form class="search-box" id="form-search">
+            <input type="search" id="search-input" placeholder="Pesquisar perguntas..." autocomplete="off" />
+            <button type="submit" aria-label="Pesquisar">🔍</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="results-section">
+      <div id="feed"></div>
+    </section>
+
+    <section class="below-fold-section" aria-label="Mais sobre o projeto">
+      <span class="section-pill">SMART MENTORSHIP</span>
+      <h2>Um espaço limpo para estudar sem poluição visual</h2>
+      <p>Enquanto você rola a página, a busca acompanha discretamente no topo e a caixa para escrever sua pergunta fica recolhida até você tocar no botão redondo no canto inferior.</p>
+    </section>
+  </main>
+
+  <!-- Botão redondo fixo no canto inferior direito -->
+  <button type="button" class="fab-ask" id="fab-ask" title="Fazer uma pergunta" aria-label="Fazer uma pergunta" aria-expanded="false" aria-controls="composer-drawer">
+    +
+  </button>
+
+  <!-- Fundo suave e caixa de pergunta confortável -->
+  <div class="composer-backdrop" id="composer-backdrop" hidden></div>
+  <aside class="composer-drawer" id="composer-drawer" aria-label="Enviar nova pergunta" hidden>
+    <div class="composer-header">
+      <div>
+        <span class="composer-kicker">NOVA DÚVIDA</span>
+        <h3>Escrever pergunta</h3>
+      </div>
+      <button type="button" class="composer-close" id="btn-close-composer" aria-label="Fechar caixa de pergunta">✕</button>
+    </div>
+
+    <form class="ask-form" id="form-question">
+      <label for="question-text">Sua pergunta</label>
+      <textarea id="question-text" maxlength="1000" placeholder="Digite aqui sua pergunta com calma e clareza..." required></textarea>
+      <div class="ask-footer">
+        <span class="ask-hint">Enviado diretamente para a mentoria</span>
+        <button type="submit" class="btn-send">Enviar</button>
+      </div>
+    </form>
+  </aside>
+
+  <script>
+    (function () {
+      const btnNotif = document.getElementById("btn-notif");
+      const notifPanel = document.getElementById("notif-panel");
+      const btnCloseNotif = document.getElementById("btn-close-notif");
+
+      const searchBox = document.getElementById("form-search");
+      const heroAnchor = document.getElementById("hero-search-anchor");
+      const topbarSlot = document.getElementById("topbar-search-slot");
+      const topbar = document.getElementById("topbar");
+
+      const fabAsk = document.getElementById("fab-ask");
+      const composerDrawer = document.getElementById("composer-drawer");
+      const composerBackdrop = document.getElementById("composer-backdrop");
+      const btnCloseComposer = document.getElementById("btn-close-composer");
+      const questionTextarea = document.getElementById("question-text");
+      const formQuestion = document.getElementById("form-question");
+
+      if (btnNotif && notifPanel) {
+        btnNotif.addEventListener("click", function (event) {
+          event.stopPropagation();
+          const willOpen = notifPanel.hasAttribute("hidden");
+          if (willOpen) {
+            notifPanel.removeAttribute("hidden");
+            btnNotif.setAttribute("aria-expanded", "true");
+          } else {
+            notifPanel.setAttribute("hidden", "");
+            btnNotif.setAttribute("aria-expanded", "false");
+          }
+        });
+
+        if (btnCloseNotif) {
+          btnCloseNotif.addEventListener("click", function () {
+            notifPanel.setAttribute("hidden", "");
+            btnNotif.setAttribute("aria-expanded", "false");
+          });
+        }
+
+        document.addEventListener("click", function (event) {
+          if (!notifPanel.hasAttribute("hidden") && !notifPanel.contains(event.target) && event.target !== btnNotif) {
+            notifPanel.setAttribute("hidden", "");
+            btnNotif.setAttribute("aria-expanded", "false");
+          }
+        });
+      }
+
+      function syncSearchPosition() {
+        if (!searchBox || !heroAnchor || !topbarSlot || !topbar) return;
+        const triggerPoint = heroAnchor.getBoundingClientRect().top - topbar.offsetHeight + 18;
+        const shouldDock = window.scrollY > 40 && triggerPoint <= 0;
+
+        if (shouldDock && searchBox.parentElement !== topbarSlot) {
+          topbarSlot.appendChild(searchBox);
+          topbarSlot.classList.add("is-visible");
+          topbar.classList.add("is-docked");
+        } else if (!shouldDock && searchBox.parentElement !== heroAnchor) {
+          heroAnchor.appendChild(searchBox);
+          topbarSlot.classList.remove("is-visible");
+          topbar.classList.remove("is-docked");
+        }
+      }
+
+      window.addEventListener("scroll", syncSearchPosition, { passive: true });
+      window.addEventListener("resize", syncSearchPosition, { passive: true });
+      syncSearchPosition();
+
+      function openComposer() {
+        if (!composerDrawer || !composerBackdrop || !fabAsk) return;
+        composerBackdrop.removeAttribute("hidden");
+        composerDrawer.removeAttribute("hidden");
+        requestAnimationFrame(function () {
+          composerBackdrop.classList.add("is-open");
+          composerDrawer.classList.add("is-open");
+        });
+        fabAsk.setAttribute("aria-expanded", "true");
+        setTimeout(function () {
+          if (questionTextarea) questionTextarea.focus();
+        }, 140);
+      }
+
+      function closeComposer() {
+        if (!composerDrawer || !composerBackdrop || !fabAsk) return;
+        composerBackdrop.classList.remove("is-open");
+        composerDrawer.classList.remove("is-open");
+        fabAsk.setAttribute("aria-expanded", "false");
+        setTimeout(function () {
+          if (!composerDrawer.classList.contains("is-open")) {
+            composerDrawer.setAttribute("hidden", "");
+            composerBackdrop.setAttribute("hidden", "");
+          }
+        }, 220);
+      }
+
+      if (fabAsk) {
+        fabAsk.addEventListener("click", function () {
+          const isOpen = composerDrawer && !composerDrawer.hasAttribute("hidden") && composerDrawer.classList.contains("is-open");
+          if (isOpen) {
+            closeComposer();
+          } else {
+            openComposer();
+          }
+        });
+      }
+
+      if (btnCloseComposer) {
+        btnCloseComposer.addEventListener("click", closeComposer);
+      }
+
+      if (composerBackdrop) {
+        composerBackdrop.addEventListener("click", closeComposer);
+      }
+
+      if (formQuestion) {
+        formQuestion.addEventListener("submit", function () {
+          setTimeout(closeComposer, 120);
+        });
+      }
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          closeComposer();
+          if (notifPanel && !notifPanel.hasAttribute("hidden")) {
+            notifPanel.setAttribute("hidden", "");
+            if (btnNotif) btnNotif.setAttribute("aria-expanded", "false");
+          }
+        }
+      });
+    })();
+  </script>
+  <script src="../js/student.js"></script>
+</body>
+</html>
