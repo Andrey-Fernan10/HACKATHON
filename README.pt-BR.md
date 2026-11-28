@@ -1,10 +1,18 @@
+# Monitoria Inteligente / Smart Mentorship
+
+[English](#english) · [Português (Brasil)](#português-brasil)
+
+---
+
+## Português (Brasil) {#português-brasil}
+
 # Monitoria Inteligente
 
-[English](README.md) · Português (Brasil)
+[English](#english) · Português (Brasil)
 
 Preencham este README e mantenham-no atualizado. Ele faz parte da entrega e deve permanecer na raiz do repositório, junto com DECISIONS.md e AI_LOG.md (e as versões em português: README.pt-BR.md, DECISIONS.pt-BR.md e AI_LOG.pt-BR.md).
 
-A documentação do projeto deve ser escrita em inglês (a versão principal é o [README.md](README.md)), com uma versão em português ao lado. Mantenham as duas versões alinhadas.
+A documentação do projeto deve ser escrita em inglês (a versão principal é o [README.md](#english)), com uma versão em português ao lado. Mantenham as duas versões alinhadas.
 
 Criem, dentro do repositório, as pastas de cada parte do projeto que forem desenvolver (por exemplo, /backend, /frontend, /docs). A organização é escolha do time — descrevam-na na seção [Estrutura de pastas](#estrutura-de-pastas).
 
@@ -32,7 +40,7 @@ Esta aplicação tem como público-alvo, principalmente, alunos que precisam de 
 
 ## Solução
 
-O Monitoria Inteligente é uma aplicação desenvolvida para facilitar a conexão entre alunos e monitores, permitindo que os estudantes encontrem monitorias disponíveis de acordo com suas necessidades e disciplinas. A plataforma busca tornar o processo de acompanhamento acadêmico mais organizado e acessível, facilitando a consulta e o gerenciamento das informações relacionadas às monitorias.
+O Monitoria Inteligente é uma aplicação desenvolvida para facilitar a conexão entre alunos e monitores, permitindo que os estudantes encontrem monitorias disponíveis de acordo com suas necessidades e disciplinas. A plataforma busca tornar o processo de acompanhamento acadêmico mais organizado e acessível, facilitando a consulta e o gerenciamento das informações relacionadas às monitorias, com apoio da API Gemini para triagem de perguntas e geração de filtros inteligentes (`POST /api/questions/ai-filters`), fallback de modelos, múltiplas tentativas por modelo e cache dos filtros no `localStorage`.
 
 MVPs – Monitoria Inteligente
 1. Autenticação de usuários:
@@ -63,20 +71,19 @@ MVPs – Monitoria Inteligente
 
 Linguagem utilizada:
   Front-End:
-    - JavaScript
+- JavaScript (HTML e CSS integrados em `src/main/resources/static`)
 
   Back-End:
-    - Java;
-    - Python para integração da IA
+- Java (Spring Boot, `HttpClient`, Spring JPA);
+- Integração com a API Gemini (`QuestionTriageService`) para triagem e filtros inteligentes
 
-O projeto será desenvolvido, inicialmente, apenas para web, desktop
-
+O projeto será desenvolvido, inicialmente, para web (servido em serviço único pelo back-end, com arquivos estáticos em `src/main/resources/static`).
 
 ## Estrutura de pastas
 
 Descrevam a organização do repositório. Ajustem o exemplo abaixo à escolha do time.
 
-text
+```text
 /
 ├── README.md
 ├── README.pt-BR.md
@@ -84,10 +91,17 @@ text
 ├── DECISIONS.pt-BR.md
 ├── AI_LOG.md
 ├── AI_LOG.pt-BR.md
+├── .env.example
 ├── backend/
-├── frontend/
+│   ├── pom.xml
+│   ├── src/
+│   │   └── main/
+│   │       ├── java/
+│   │       └── resources/
+│   │           ├── application.properties
+│   │           └── static/
 └── docs/
-
+```
 
 ## Como rodar
 
@@ -108,9 +122,14 @@ Ferramentas de desenvolvimento:
 
 ### Back-end
 
-
 # comandos para instalar dependências e subir o back-end
 
+### Back-end
+
+```bash
+#    (As dependências do Spring Boot e do SQLite vêm do pom.xml e são baixadas automaticamente pelo Maven;
+cd backend && .\mvnw.cmd clean spring-boot:run
+```
 
 ### Front-end
 
@@ -120,7 +139,7 @@ Ferramentas de desenvolvimento:
 
 ## CI/CD
 
-(descrevam a pipeline de GitHub Actions: o que roda em cada PR e em cada push na main — no mínimo build, lint e testes)
+Pipeline de GitHub Actions configurada para executar build, lint e testes em pull requests e pushes na branch main (ajustar conforme os workflows ativos no repositório).
 
 ## Deploy
 

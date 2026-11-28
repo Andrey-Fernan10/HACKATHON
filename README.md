@@ -1,81 +1,81 @@
-# Smart tutoring 
+# Smart Mentorship
 
-*English* · [Português (Brasil)](README.pt-BR.md)
+English · [Português (Brasil)](README.pt-BR.md)
 
-Fill in this README and keep it up to date. It is part of the delivery and must remain at the *root* of the repository, together with DECISIONS.md and AI_LOG.md (and their Portuguese versions: README.pt-BR.md, DECISIONS.pt-BR.md and AI_LOG.pt-BR.md).
+Fill out this README and keep it up to date. It is part of the deliverable and must remain at the root of the repository, together with DECISIONS.md and AI_LOG.md (and the Portuguese versions: README.pt-BR.md, DECISIONS.pt-BR.md, and AI_LOG.pt-BR.md).
 
-Project documentation must be written in *English* (this file is the main version), with a *Portuguese version* alongside. Keep both versions in sync.
+Project documentation must be written in English (the main version is [README.md](README.md)), with a Portuguese version alongside it. Keep both versions aligned.
 
-Create, inside the repository, the *folders for each part of the project* you will develop (for example, /backend, /frontend, /docs). How you organize them is the team's choice — describe it in [Folder structure](#folder-structure).
+Create, inside the repository, the folders for each part of the project you develop (for example, /backend, /frontend, /docs). The organization is up to the team — describe it in the [Folder Structure](#folder-structure) section.
 
-On the first day, add the instructor as a repository collaborator, using the email **adrianoanschau@gmail.com*.
+On day one, add the instructor as a collaborator on the repository with the email **adrianoanschau@gmail.com**.
 
 ## Team
 
-- *Class:* TDS — mixed groups 6570, 6756, and 6863
-- *Tech Lead:*
-- *Presentation lead:*
-- *Members:*
+- Cohort: TDS — mixed classes 6570, 6756, and 6863
+- Tech Lead: Luísa Lopes
+- Presentation Lead: Andrey Fernandes
+- Members:
   - Luisa — luisalopes11
   - João Vitor — GHuser26-dev
   - Andrey — Andrey-Fernan10
   - Murilo — murilomachadofelix
 
-## Theme / area
+## Theme / Domain
 
-Smart tutoring (Monitoria inteligente) — campus life and community
+Smart mentorship — campus and community life
 
 ## Problem
 
-Our application aims to address the difficulties students may face in locating and accessing tutoring sessions tailored to their academic needs. 
-The application is primarily designed for students who require study support and wish to find assistance from tutors for specific subjects.
+Our application aims to address the difficulty students may face when trying to find and access academic mentorship tailored to their study needs.
+This application targets primarily students who need academic support and want to find help from teaching assistants or mentors in specific subjects.
 
 ## Solution
 
-Smart tutoring (Monitoria inteligente) is an application developed to facilitate connections between students and tutors, allowing students to find available tutoring sessions based on their specific needs and subjects. The platform aims to make the academic support process more organized and accessible, simplifying how information related to tutoring sessions is accessed and managed.
+Smart Mentorship is an application built to connect students with mentors and instructors, allowing students to find support according to their needs and subjects. The platform aims to make academic follow-up more organized and accessible, facilitating access to and management of mentorship information, supported by the Gemini API for question triage and smart filter generation (`POST /api/questions/ai-filters`), model fallback, multiple retries per model, and `localStorage` caching for filters.
 
-MVPs – Smart tutoring (Monitoria inteligente)
+MVPs – Smart Mentorship
 1. User authentication:
   - User login.
-  - Profile identification (Teacher or Student).
-  - Registration (name, email, and password).
+  - Role identification (Instructor or Student).
+  - Registration with name, email, and password.
 2. Question management:
   - Students can submit questions.
   - Storage of question text.
   - Identification of the student who submitted the question.
-3. AI-powered intelligent filtering:
+3. AI smart filter:
   - Analysis of incoming questions.
-  - Identification of related questions based on correlation.
-  - Routing of questions based on the analysis results.
-4. Teacher dashboard:
-  - View of the student question inbox.
-  - Access to received questions.
-  - Ability to respond to questions.
-5. Response system:
-  - Storage of response text.
-  - Linking of the response to the corresponding question.
-  - Recording of response evaluation (good_response, initially set to false).
-6. Viewing answered questions:
-  - Display of questions that have already been answered.
-  - Presentation of the corresponding answers to students.
+  - Identification of related questions by correlation.
+  - Routing/grouping of questions based on analysis results.
+4. Instructor area:
+  - Viewing the student question queue.
+  - Accessing received questions.
+  - Ability to answer questions.
+5. Answer system:
+  - Storage of answer text.
+  - Linking the answer to the corresponding question.
+  - Recording answer evaluation (`good_response`, initially false).
+6. Answered questions view:
+  - Displaying questions that already have answers.
+  - Showing their corresponding answers to students.
 
 ## Stack
 
-Languages ​​used:
-  Front-End: 
-    - JavaScript
+Languages and tools used:
+  Front-End:
+- JavaScript (HTML and CSS integrated under `src/main/resources/static`)
 
-  Back-End: 
-    - Java; 
-    - Python for AI integration
-  
-The project will initially be developed exclusively for web and desktop.
+  Back-End:
+- Java (Spring Boot, `HttpClient`, Spring JPA);
+- Gemini API integration (`QuestionTriageService`) for triage and smart filters
 
-## Folder structure
+The project will be developed initially for the web (served as a single service by the back-end, with static assets in `src/main/resources/static`).
 
-Describe how the repository is organized. Adjust the example below to the team's choice.
+## Folder Structure
 
-text
+Describe the repository organization. Adjust the example below to match the team's choice.
+
+```text
 /
 ├── README.md
 ├── README.pt-BR.md
@@ -83,23 +83,30 @@ text
 ├── DECISIONS.pt-BR.md
 ├── AI_LOG.md
 ├── AI_LOG.pt-BR.md
+├── .env.example
 ├── backend/
-├── frontend/
+│   ├── pom.xml
+│   ├── src/
+│   │   └── main/
+│   │       ├── java/
+│   │       └── resources/
+│   │           ├── application.properties
+│   │           └── static/
 └── docs/
-
-
-## How to run
+```
+## How to Run
 
 ### Prerequisites
 
-Back-End: 
+Back-End:
   - Java JDK 17
   - Apache Maven
   - Spring Boot 3.3.5
   - SQLite
+  - Environment variables / .env with GEMINI_API_KEY (and optional GEMINI_MODEL)
 
-Front-End: 
-  - Update web browser
+Front-End:
+  - Up-to-date Web Browser
 
 Development tools:
   - Visual Studio Code
@@ -107,26 +114,31 @@ Development tools:
 
 ### Back-end
 
-bash
 # commands to install dependencies and start the back-end
 
+### Back-end
+
+```bash
+# Spring Boot and SQLite dependencies come from pom.xml and are downloaded automatically by Maven;
+cd backend && .\mvnw.cmd clean spring-boot:run
+```
 
 ### Front-end
 
-bash
+
 # commands to install dependencies and start the front-end
 
 
 ## CI/CD
 
-(describe the GitHub Actions pipeline: what runs on each PR and on each push to main — at a minimum, build, lint and tests)
+GitHub Actions pipeline configured to run build, lint, and tests on pull requests and pushes to the main branch (update according to active workflows in the repository).
 
 ## Deploy
 
-(where the application is published, if applicable; or note that automatic deploy has not been set up yet)
+Automated deployment has not been configured yet.
 
 ## Links
 
-- **Repository:**
-- **Deploy (if any):**
+- Repository:
+- Deploy (if any):
 - **https://github.com/Andrey-Fernan10/HACKATHON.git**

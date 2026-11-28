@@ -19,20 +19,34 @@ Copiem o modelo abaixo sempre que precisarem de uma entrada nova.
 - **Motivo:**
 ```
 
-## 23/11/2026 — Escolha da stack de back-end (exemplo)
+## 27/11/2026 — Escolha do front-end
 
-- **Decisão:** usar Node.js com Express no back-end.
-- **Alternativas consideradas:** Java com Spring Boot; Python com FastAPI.
-- **Motivo:** o time já tem mais familiaridade com JavaScript, e o prazo de uma semana favorece uma stack na qual todos conseguem contribuir desde o primeiro dia.
+- **Decisão:** usar HTML, CSS e JavaScript no front-end.
+- **Alternativas consideradas:** React.
+- **Motivo:** os membros têm mais afinidade com as linguagens escolhidas e achou que seria melhor e mais condizente com o tipo de projeto se fosse feito através da internet.
 
-## [24/11/2026] — [Linguagens de programação que serão utilizadas:]
+## 27/11/2026 — Escolha do back-end
 
-- **Decisão:** Usar para front-end HTML, CSS e JS e para back-end com java Spring Boot
-- **Alternativas consideradas:** Python para potencialização da IA no back-end e React para front-end
-- **Motivo:** Melhor afinidade dos membros com as linguagens selecionadas.
+- **Decisão:** usar Java com Spring Boot no back-end.
+- **Alternativas consideradas:** Python com algumas extensões.
+- **Motivo:** os membros têm mais afinidade com Java, mantendo Python como alternativa.
 
-## [24/11/2026] — [Linguagens de programação que serão utilizadas:]
+## 27/11/2026 — Escolha do banco de dados
 
-- **Decisão:** 
-- **Alternativas consideradas:** 
-- **Motivo:** 
+- **Decisão:** usar SQLite como banco de dados nesta etapa.
+- **Alternativas consideradas:** bancos de dados que exigem mais configuração para começar, como PostgreSQL ou Supabase.
+- **Motivo:** SQLite é prático para desenvolver o projeto no prazo disponível. A equipe prevê migrar para outra solução se a evolução do sistema exigir.
+
+## 27/11/2026 — Escolha da API de IA
+
+- **Decisão:** usar a API Gemini.
+- **Alternativas consideradas:** outras APIs de IA como chat GPT.
+- **Motivo:** a API é gratuita para o uso previsto e alguns membros já têm experiência com ela.
+
+## 27/11/2026 — Respostas às perguntas do briefing
+
+1. **Pergunta sem responsável:** após um prazo configurado, destacar como prioritária ou sem responsável. Uma sugestão da IA pode servir de apoio provisório, sempre identificada como não validada por uma pessoa.
+2. **Evitar respostas duplicadas:** ao assumir uma pergunta, marcar o responsável e o status como em atendimento, avisando os demais monitores. A reserva pode expirar se não houver conclusão dentro do prazo definido.
+3. **Identificar IA e validação humana:** usar selos visuais diferentes para triagem ou sugestão da IA e resposta validada por monitor ou professor. A resposta final só é exibida após confirmação humana.
+4. **Informações mínimas para triagem:** enunciado claro, disciplina ou tema e a dúvida concreta. Quando aplicável, pedir também o que o aluno tentou ou onde travou.
+5. **Encontrar respostas confiáveis:** mostrar a origem e a validação humana da resposta; permitir busca e filtros por disciplina ou tema, priorizando perguntas respondidas.
